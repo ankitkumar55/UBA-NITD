@@ -503,6 +503,62 @@ function showProjects(projects) {
 getProjects().then(data => {
     showProjects(data);
 })
+
+    AOS.init({
+      duration: 1200,
+      easing: 'ease-in-out-cubic'
+    });
+
+
+
+// Function to move slides
+function moveSlide(n) {
+  const slides = document.querySelectorAll('.slide');
+  const slideWidth = slides[0].clientWidth;
+
+  slideIndex += n;
+
+  if (slideIndex < 0) {
+    slideIndex = slides.length - 3; // Account for 3 slides displayed at a time
+  } else if (slideIndex >= slides.length - 2) {
+    slideIndex = 0;
+  }
+
+  const translateXValue = -slideIndex * slideWidth;
+  document.querySelector('.carousel').style.transform = `translateX(${translateXValue}px)`;
+}
+
+// Function to start automatic rotation
+function startCarousel() {
+  intervalId = setInterval(() => {
+    moveSlide(1);
+  }, 1000); // Rotate every 1 second
+}
+
+// Function to stop automatic rotation
+function stopCarousel() {
+  clearInterval(intervalId);
+}
+
+// Start carousel when page loads
+window.onload = startCarousel;
+
+
+document.getElementById("menuToggle").addEventListener("click", function () {
+  if (window.innerWidth <= 768) {
+    var checkbox = document.querySelector("#menuToggle input[type='checkbox']");
+    var menu = document.getElementById("ownmenu");
+    if (checkbox.checked) {
+      checkbox.checked = false;
+      menu.style.display = "none";
+    } else {
+      checkbox.checked = true;
+      menu.style.display = "flex";
+    }
+  }
+});
+
+
 </script>
 
 </body>
